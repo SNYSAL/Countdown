@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: transparent; 
+            font-family: 'Inter', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #date {
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        #time {
+            font-size: 85px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .line-container {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .line-loader {
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+            animation: moveLine 2s infinite ease-in-out;
+        }
+
+        @keyframes moveLine {
+            0% { left: -50%; }
+            50% { left: 100%; }
+            100% { left: -50%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="date">-- -- ----</div>
+        <div id="time">00:00:00</div>
+        <div class="line-container">
+            <div class="line-loader"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const dateEl = document.getElementById('date');
+            const timeEl = document.getElementById('time');
+            
+            if (!dateEl || !timeEl) return; // Safety check
+
+            const now = new Date();
+            const dateOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+            const dateString = now.toLocaleDateString('th-TH', dateOptions);
+            
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            dateEl.textContent = dateString;
+            timeEl.textContent = hours + ":" + minutes + ":" + seconds;
+        }
+
+        // Initialize
+        updateClock();
+        // Set interval
+        var clockInterval = setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
